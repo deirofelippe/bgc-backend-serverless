@@ -1,0 +1,4 @@
+{
+   "body": "{\"pedido\":{\"numero_pedido\":\"18b5edd0-881c-11eb-9f92-697c84a77bbc\",\"total\":70000,\"data_pedido\":1616093981997,\"usuario\":{\"nome\":\"Feh\",\"email\":\"feh@gmail.com\"},\"reservas\":[{\"nome\":\"Teste 0\",\"descricao\":\"a\",\"preco\":\"5000\",\"quantidade\":2},{\"nome\":\"a\",\"descricao\":\"a\",\"preco\":\"5000\",\"quantidade\":4},{\"nome\":\"Teste 4\",\"descricao\":\"a\",\"preco\":\"5000\",\"quantidade\":7},{\"nome\":\"Teste 3\",\"descricao\":\"a\",\"preco\":\"5000\",\"quantidade\":1}]}}"
+}
+
