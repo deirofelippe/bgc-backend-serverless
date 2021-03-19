@@ -1,0 +1,63 @@
+service: dynamodbPedido
+
+frameworkVersion: '2'
+
+variablesResolutionMode: 20210219
+
+package:
+  exclude:
+    - node_modules/aws-sdk/**
+    - mocks/
+    - package-lock.json
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  apiGateway:
+    shouldStartNameWithService: true
+  region: sa-east-1
+  environment:
+    TABELA_PEDIDO: Pedido
+  iam:
+    role:
+      statements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+          - dynamodb:PutItem
+        Resource: "arn:aws:dynamodb:${self:provider.region}:*:*"
+
+functions:
+  adicionar_pedido:
+    handler: handler.adicionar
+    events:
+      - http:
+          path: pedido
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    Produto:
+      Type: 'AWS::DynamoDB::Table'
+      # DeletionPolicy: Retain 
+      Properties:
+        TableName: ${self:provider.environment.TABELA_PEDIDO}
+        AttributeDefinitions:
+          -
+            AttributeName: numero_pedido
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: numero_pedido
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+# endpoints:
+#   POST - https://y29opz1dp9.execute-api.sa-east-1.amazonaws.com/dev/pedido
+# functions:
+#   adicionar_pedido: dynamodbPedido-dev-adicionar_pedido

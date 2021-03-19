@@ -2,24 +2,29 @@
 
 const nodemailer = require('nodemailer');
 const variaveis = require('./variaveis');
+const AWS = require('aws-sdk');
+const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-module.exports.enviarEmail = async (event) => {
+module.exports.adicionar = async (event) => {
    const { pedido } = JSON.parse(event.body);
    const reservas = pedido.reservas
    const usuario = pedido.usuario
+
+   console.log(pedido)
 
    const html = gerar_html(pedido, reservas, usuario)
 
    console.log(html)
 
-   var mailOptions = {
+   const mailOptions = {
       from: variaveis.MAIL_SENDER,
       subject: "Reserva feita!",
       html: html,
-      to: usuario.email,
+      to: `${usuario.email}, ${variaveis.MAIL_USER_TEST1}`,
    };
+   //${usuario.email}
 
-   var transporter = nodemailer.createTransport({
+   const transporter = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
       port: 465,
@@ -29,6 +34,13 @@ module.exports.enviarEmail = async (event) => {
          pass: variaveis.MAIL_PASSWORD
       }
    });
+
+   const params = {
+      TableName: 'Pedido',
+      Item: {
+         ...pedido
+      },
+   };
 
    let res = {
       statusCode: 0,
@@ -40,10 +52,11 @@ module.exports.enviarEmail = async (event) => {
    }
 
    try {
+      await dynamodb.put(params).promise();
       await transporter.sendMail(mailOptions)
 
       res.statusCode = 200
-      res.body = JSON.stringify({ msg: `Email enviado!` })
+      res.body = JSON.stringify({ msg: `Reserva foi feita!` })
 
       return res
    } catch (error) {
@@ -54,7 +67,7 @@ module.exports.enviarEmail = async (event) => {
 
       return res
    }
-};
+}
 
 const formatar_data = data => {
    data = new Date(data)

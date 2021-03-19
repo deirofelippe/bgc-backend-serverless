@@ -1,4 +1,4 @@
-service: dynamodb
+service: dynamodbProduto
 
 frameworkVersion: '2'
 
@@ -70,7 +70,7 @@ resources:
   Resources:
     Produto:
       Type: 'AWS::DynamoDB::Table'
-      # DeletionPolicy: Retain #Não deleta a tabela
+      # DeletionPolicy: Retain 
       Properties:
         TableName: ${self:provider.environment.TABELA_PRODUTO}
         AttributeDefinitions:
@@ -84,15 +84,16 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+
 # endpoints:
-#   POST - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto
-#   PUT - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
-#   DELETE - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
-#   GET - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
-#   GET - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto
+#   POST - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto
+#   PUT - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
+#   DELETE - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
+#   GET - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
+#   GET - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto
 # functions:
-#   adicionar_produto: dynamodb-dev-adicionar_produto
-#   atualizar_produto: dynamodb-dev-atualizar_produto
-#   deletar_produto: dynamodb-dev-deletar_produto
-#   buscar_produto: dynamodb-dev-buscar_produto
-#   listar_produto: dynamodb-dev-listar_produto
+#   adicionar_produto: dynamodbProduto-dev-adicionar_produto
+#   atualizar_produto: dynamodbProduto-dev-atualizar_produto
+#   deletar_produto: dynamodbProduto-dev-deletar_produto
+#   buscar_produto: dynamodbProduto-dev-buscar_produto
+#   listar_produto: dynamodbProduto-dev-listar_produto
