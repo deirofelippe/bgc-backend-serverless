@@ -98,7 +98,7 @@ const gerar_html = (pedido, reservas, usuario) => {
    </head>
    <body>
       <h1>Olá ${usuario.nome}, sua reserva foi feita!</h1></br>
-      <h2>Abaixo segue os dados de sua reserva.</h2></br>
+      <h2>Segue abaixo os dados de sua reserva.</h2></br>
       
       <p>Número do pedido: ${pedido.numero_pedido}</p></br>
       <p>Data do pedido: ${formatar_data(pedido.data_pedido)}</p></br>

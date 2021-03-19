@@ -1,0 +1,98 @@
+service: dynamodb
+
+frameworkVersion: '2'
+
+variablesResolutionMode: 20210219
+
+package:
+  exclude:
+    - node_modules/aws-sdk/**
+    - mocks/
+    - package-lock.json
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  apiGateway:
+    shouldStartNameWithService: true
+  region: sa-east-1
+  environment:
+    TABELA_PRODUTO: Produto
+  iam:
+    role:
+      statements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+          - dynamodb:Query
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+          - dynamodb:DescribeTable
+        Resource: "arn:aws:dynamodb:${self:provider.region}:*:*"
+
+functions:
+  adicionar_produto:
+    handler: handler.adicionar
+    events:
+      - http:
+          path: produto
+          method: post
+  atualizar_produto:
+    handler: handler.atualizar
+    events:
+      - http:
+          path: produto/{id}
+          method: put
+  deletar_produto:
+    handler: handler.deletar
+    events:
+      - http:
+          path: produto/{id}
+          method: delete
+  buscar_produto:
+    handler: handler.buscar
+    events:
+      - http:
+          path: produto/{id}
+          method: get
+  listar_produto:
+    handler: handler.listar
+    events:
+      - http:
+          path: produto
+          method: get
+
+resources:
+  Resources:
+    Produto:
+      Type: 'AWS::DynamoDB::Table'
+      # DeletionPolicy: Retain #Não deleta a tabela
+      Properties:
+        TableName: ${self:provider.environment.TABELA_PRODUTO}
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+# endpoints:
+#   POST - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto
+#   PUT - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
+#   DELETE - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
+#   GET - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
+#   GET - https://uk1h6ofed4.execute-api.sa-east-1.amazonaws.com/dev/produto
+# functions:
+#   adicionar_produto: dynamodb-dev-adicionar_produto
+#   atualizar_produto: dynamodb-dev-atualizar_produto
+#   deletar_produto: dynamodb-dev-deletar_produto
+#   buscar_produto: dynamodb-dev-buscar_produto
+#   listar_produto: dynamodb-dev-listar_produto
