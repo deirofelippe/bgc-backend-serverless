@@ -24,40 +24,40 @@ sudo npm i -g serverless@2.29.0
 
 1. **Criar conta na AWS**
 
-Crie conta na aws e copie a KEY_API e SECRET_KEY [(veja esse vídeo, como exemplo, para obter as credenciais)](https://www.youtube.com/watch?v=KngM5bfpttA)
+   Crie conta na aws e copie a KEY_API e SECRET_KEY [(veja esse vídeo, como exemplo, para obter as credenciais)](https://www.youtube.com/watch?v=KngM5bfpttA)
 
 2. **Configuração do Serverless Framework**
 
-```bash
-sls config credentials -o --provider aws --key=KEY_API --secret SECRET_KEY
-```
+   ```bash
+   sls config credentials -o --provider aws --key=KEY_API --secret SECRET_KEY
+   ```
 
 3. **Clonando o projeto e configurando**
 
-```bash
-git clone https://github.com/felippedesouza/bgc-backend-serverless.git
-cd bgc-backend-serverless/dynamodb_pedido
-npm install
-mv variaveis.exemplo.js variaveis.js
-```
+   ```bash
+   git clone https://github.com/felippedesouza/bgc-backend-serverless.git
+   cd bgc-backend-serverless/dynamodb_pedido
+   npm install
+   mv variaveis.exemplo.js variaveis.js
+   ```
 
 4. **Coloque seus dados de email em 'dynamodb_pedido/variaveis.js' (MAIL_SENDER, MAIL_USER e MAIL_PASSWORD)**
 
-**Nota:** caso use o Gmail, ative o modo [Less Secure Apps](https://devanswers.co/allow-less-secure-apps-access-gmail-account/)
+   **Nota:** caso use o Gmail, ative o modo [Less Secure Apps](https://devanswers.co/allow-less-secure-apps-access-gmail-account/)
 
 5. **Fazer deploy da configuração do seu service e do seu código**
 
-```bash
-sls deploy -v
-```
+   ```bash
+   sls deploy -v
+   ```
 
 5. **Conectando o frontend ao backend**
 
-Ao terminar o deploy, copie o endpoint do método HTTP .
+   Ao terminar o deploy, copie o endpoint do método HTTP .
 
    ![](./img/sls-1.png)
 
-Cole em .env de [bgc-frontend](https://github.com/felippedesouza/bgc-backend-serverless)
+   Cole em `.env` do [bgc-frontend](https://github.com/felippedesouza/bgc-frontend/blob/main/.env.exemplo)
 
    ![](./img/sls-2.png)
 
