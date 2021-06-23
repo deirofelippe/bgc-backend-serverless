@@ -10,19 +10,14 @@ module.exports.adicionar = async (event) => {
    const reservas = pedido.reservas
    const usuario = pedido.usuario
 
-   console.log(pedido)
-
    const html = gerar_html(pedido, reservas, usuario)
-
-   console.log(html)
 
    const mailOptions = {
       from: variaveis.MAIL_SENDER,
       subject: "Reserva feita!",
       html: html,
-      to: `${usuario.email}, ${variaveis.MAIL_USER_TEST1}`,
+      to: `${usuario.email}, ${variaveis.MAIL_USER}`,
    };
-   //${usuario.email}
 
    const transporter = nodemailer.createTransport({
       service: 'gmail',
