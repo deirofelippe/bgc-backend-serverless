@@ -17,6 +17,6 @@ module.exports.atualizar = async (params) => {
    return await dynamodb.update(params).promise();
 }
 
-module.exports.remover = async (params) => {
+module.exports.deletar = async (params) => {
    return await dynamodb.delete(params).promise();
 }
