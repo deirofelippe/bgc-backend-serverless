@@ -1,69 +1,3 @@
-'use strict';
-
-const nodemailer = require('nodemailer');
-const variaveis = require('./variaveis');
-const AWS = require('aws-sdk');
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-
-module.exports.adicionar = async (event) => {
-   const { pedido } = JSON.parse(event.body);
-   const reservas = pedido.reservas
-   const usuario = pedido.usuario
-
-   const html = gerar_html(pedido, reservas, usuario)
-
-   const mailOptions = {
-      from: variaveis.MAIL_SENDER,
-      subject: "Reserva feita!",
-      html: html,
-      to: `${usuario.email}, ${variaveis.MAIL_USER}`,
-   };
-
-   const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true, 
-      auth: {
-         user: variaveis.MAIL_USER,
-         pass: variaveis.MAIL_PASSWORD
-      }
-   });
-
-   const params = {
-      TableName: 'Pedido',
-      Item: {
-         ...pedido
-      },
-   };
-
-   let res = {
-      statusCode: 0,
-      headers: {
-         'Access-Control-Allow-Origin': '*',
-         'Access-Control-Allow-Credentials': true,
-      },
-      body: ""
-   }
-
-   try {
-      await dynamodb.put(params).promise();
-      await transporter.sendMail(mailOptions)
-
-      res.statusCode = 200
-      res.body = JSON.stringify({ msg: `Reserva foi feita!` })
-
-      return res
-   } catch (error) {
-      console.log(error)
-
-      res.statusCode = 500
-      res.body = JSON.stringify({ msg: "Falha no envio de email." })
-
-      return res
-   }
-}
-
 const formatar_data = data => {
    data = new Date(data)
    return `${data.getDay()}/${data.getMonth()}/${data.getFullYear()} às ${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`
@@ -77,8 +11,7 @@ const formatar_valor = valor => {
    return formatter.format(valor)
 }
 
-
-const gerar_html = (pedido, reservas, usuario) => {
+module.exports.gerar_corpo_email = (pedido, reservas, usuario) => {
    let html = `
    <!DOCTYPE html>
    <html lang="pt-br">
@@ -142,4 +75,3 @@ const gerar_html = (pedido, reservas, usuario) => {
    `
    return html
 }
-   

@@ -26,23 +26,54 @@ provider:
       - Effect: Allow
         Action:
           - dynamodb:Scan
+          - dynamodb:Query
+          - dynamodb:GetItem
           - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
         Resource: "arn:aws:dynamodb:${self:provider.region}:*:*"
 
 functions:
   adicionar_pedido:
-    handler: handler.adicionar
+    handler: src/handler.adicionar
     events:
       - http:
           path: pedido
           method: post
+          cors: true
+  listar_pedido:
+    handler: src/handler.listar
+    events:
+      - http:
+          path: pedido
+          method: get
+          cors: true
+  buscar_pedido:
+    handler: src/handler.buscar
+    events:
+      - http:
+          path: pedido/{id}
+          method: get
+          cors: true
+  atualizar_pedido:
+    handler: src/handler.atualizar
+    events:
+      - http:
+          path: pedido/{id}
+          method: put
+          cors: true
+  deletar_pedido:
+    handler: src/handler.deletar
+    events:
+      - http:
+          path: pedido/{id}
+          method: delete
           cors: true
 
 resources:
   Resources:
     Produto:
       Type: 'AWS::DynamoDB::Table'
-      # DeletionPolicy: Retain 
       Properties:
         TableName: ${self:provider.environment.TABELA_PEDIDO}
         AttributeDefinitions:
@@ -56,8 +87,3 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
-# endpoints:
-#   POST - https://y29opz1dp9.execute-api.sa-east-1.amazonaws.com/dev/pedido
-# functions:
-#   adicionar_pedido: dynamodbPedido-dev-adicionar_pedido
