@@ -1,7 +1,7 @@
 const dao = require('../dao/pedido_dao');
 
 module.exports.deletar = async (event) => {
-   const { numero_pedido } = JSON.parse(event.body);
+   const { numero_pedido } = event.pathParameters.id
 
    const params = {
       TableName: 'Pedido',

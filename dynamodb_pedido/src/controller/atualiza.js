@@ -1,7 +1,7 @@
 const dao = require('../dao/pedido_dao');
 
 module.exports.atualizar = async (event) => {
-   const { pedido } = JSON.parse(event.body);
+   const { pedido } = event.pathParameters.id
    const reservas = pedido.reservas
    const usuario = pedido.usuario
    
