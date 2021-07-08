@@ -7,6 +7,7 @@
 - [Requisitos](#requisitos)
 - [Como usar](#como-usar)
 - [Vídeos](#videos)
+- [Comandos uteis](#comandos-uteis)
 
 ## Requisitos
 [(ir para o sumário)](#sumário)
@@ -29,7 +30,7 @@ sudo npm i -g serverless@2.29.0
 2. **Configuração do Serverless Framework**
 
    ```bash
-   sls config credentials -o --provider aws --key=KEY_API --secret SECRET_KEY
+   sls config credentials -o --provider aws --key=SUA_KEY_API --secret SUA_SECRET_KEY
    ```
 
 3. **Clonando o projeto e configurando**
@@ -79,3 +80,29 @@ sudo npm i -g serverless@2.29.0
       <img src="https://img.youtube.com/vi/kWpBPtolxFw/0.jpg" />
    </a>
 </p>
+
+## Comandos uteis
+
+**Nota:** `sls` é um alias para `serverless`
+
+[Mais informações sobre os comandos do CLI](https://www.serverless.com/framework/docs/providers/aws/)
+
+- `sls config credentials -o --provider aws --key=KEY_API --secret SECRET_KEY`
+   - usa o serverless para configurar as credenciais da AWS
+- `sls create --template aws-nodejs --path myService`
+- `sls deploy -v` 
+   - faz deploy ou atualiza a infraestrutura baseado no serverless.yml
+- `sls deploy function -f adicionar_pedido`
+   - atualiza o código da função
+- `sls invoke local --function adicionar_pedido  --path mocks/adicionar_pedido.json `
+- `sls invoke local --function listar_pedido`
+- `sls invoke local --function deletar_pedido    --path mocks/deletar_pedido.json`
+- `sls invoke local --function buscar_pedido     --path mocks/buscar_pedido.json `
+- `sls invoke local --function atualizar_pedido  --path mocks/atualizar_pedido.json `
+- `sls logs -f enviarEmail -t`
+   - exibe o log da função e acompanha em tempo real (opcional) com o `-t`
+- `sls remove -v`
+   - remove tudo o que o deploy fez e mostra de forma verbosa com `-v`
+- `sls info -v` 
+   - informações sobre o deploy do service (functions, endpoints, stack outputs e etc)
+- `sls deploy list functions`

@@ -70,7 +70,6 @@ resources:
   Resources:
     Produto:
       Type: 'AWS::DynamoDB::Table'
-      # DeletionPolicy: Retain 
       Properties:
         TableName: ${self:provider.environment.TABELA_PRODUTO}
         AttributeDefinitions:
@@ -84,16 +83,3 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-
-# endpoints:
-#   POST - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto
-#   PUT - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
-#   DELETE - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
-#   GET - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto/{id}
-#   GET - https://t35bpvgyml.execute-api.sa-east-1.amazonaws.com/dev/produto
-# functions:
-#   adicionar_produto: dynamodbProduto-dev-adicionar_produto
-#   atualizar_produto: dynamodbProduto-dev-atualizar_produto
-#   deletar_produto: dynamodbProduto-dev-deletar_produto
-#   buscar_produto: dynamodbProduto-dev-buscar_produto
-#   listar_produto: dynamodbProduto-dev-listar_produto
