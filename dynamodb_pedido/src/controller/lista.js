@@ -7,11 +7,7 @@ module.exports.listar = async (event) => {
 
    let response = {
       statusCode: 0,
-      headers: {
-         'Access-Control-Allow-Origin': '*',
-         'Access-Control-Allow-Credentials': true,
-      },
-      body: ""
+      body: ''
    }
 
    try {
@@ -21,6 +17,7 @@ module.exports.listar = async (event) => {
       response.body = JSON.stringify({ pedidos: items.Items, count: items.Count })
    } catch (error) {
       console.log(error)
+
       response.statusCode = 500
       response.body = JSON.stringify({ msg: 'Falha em algo.' })
    }

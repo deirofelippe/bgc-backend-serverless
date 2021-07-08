@@ -20,20 +20,20 @@ module.exports.adicionar = async (event) => {
          'Access-Control-Allow-Origin': '*',
          'Access-Control-Allow-Credentials': true,
       },
-      body: ""
+      body: ''
    }
 
    try {
-      dao.adicionar(params)
-      enviar_email(pedido, reservas, usuario)
-      // enviar_dados_pagseguro()
+      await dao.adicionar(params)
+      await enviar_email(pedido, reservas, usuario)
+      // await enviar_dados_pagseguro()
 
-      response.statusCode = 200
-      response.body = JSON.stringify({ msg: `Reserva foi feita!` })
+      response.statusCode = 201
    } catch (error) {
       console.log(error)
+
       response.statusCode = 500
-      response.body = JSON.stringify({ msg: "Falha em algo." })
+      response.body = JSON.stringify({ msg: 'Falha em algo.' })
    }
 
    return response
