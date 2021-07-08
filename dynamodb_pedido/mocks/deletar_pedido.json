@@ -1,4 +1,4 @@
 {
-   "body": "{\"numero_pedido\": \"00\"}"
+   "pathParameters": { "id": "00" }
 }
 

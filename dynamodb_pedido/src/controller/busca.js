@@ -1,7 +1,7 @@
 const dao = require('../dao/pedido_dao');
 
 module.exports.buscar = async (event) => {
-   const { numero_pedido } = event.pathParameters.id
+   const numero_pedido = event.pathParameters.id
 
    const params = {
       TableName: 'Pedido',
