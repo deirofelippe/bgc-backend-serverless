@@ -1,14 +1,32 @@
 const dao = require('../dao/pedido_dao');
 
 module.exports.buscar = async (event) => {
+   const { numero_pedido } = JSON.parse(event.body);
+
    const params = {
       TableName: 'Pedido',
       Key: {
-         "numero_pedido": "00"
+         'numero_pedido': numero_pedido
       }
    };
 
-   const r = await dao.buscar(params)
-   console.log(r)
-   return
+   let response = {
+      statusCode: 0,
+      body: ''
+   }
+
+   try {
+      const item = await dao.buscar(params)
+      console.log(item)
+
+      response.statusCode = 200
+      response.body = JSON.stringify({ pedido: item.Item })
+   } catch (error) {
+      console.log(error)
+
+      response.statusCode = 500
+      response.body = JSON.stringify({ msg: 'Falha em algo.' })
+   }
+
+   return response
 }
