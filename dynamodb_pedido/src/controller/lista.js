@@ -15,14 +15,14 @@ module.exports.listar = async (event) => {
    }
 
    try {
-      const pedidos = await dao.listar(params)
+      const items = await dao.listar(params)
 
       response.statusCode = 200
-      response.body = JSON.stringify({ pedidos: pedidos.Items, count: pedidos.Count })
+      response.body = JSON.stringify({ pedidos: items.Items, count: items.Count })
    } catch (error) {
       console.log(error)
       response.statusCode = 500
-      response.body = JSON.stringify({ msg: "Falha em algo." })
+      response.body = JSON.stringify({ msg: 'Falha em algo.' })
    }
    
    console.log(response)
