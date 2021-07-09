@@ -27,5 +27,5 @@ module.exports.deletar = async (event) => {
    }
    
    console.log(response)
-   return
+   return response
 }
