@@ -1,0 +1,6 @@
+{
+   "body": "{\"nome\":\"cachorro\",\"descricao\":\"led 20 polegadas\",\"preco\":\"125.00\", \"imagem\":\"imagem\"}",
+   "pathParameters": {
+      "id": "00"
+   }
+}
