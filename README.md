@@ -1,6 +1,6 @@
 # Desafio GBC Loja (Backend serverless)
 
-[Teste o site clicando aqui ;)](http://bgc-frontend.s3-website-sa-east-1.amazonaws.com/)
+[Teste o site clicando aqui ;)](https://ecstatic-shannon-40084c.netlify.app/)
 
 ## Sumário
 
@@ -10,6 +10,7 @@
 - [Comandos uteis](#comandos-uteis)
 
 ## Requisitos
+
 :arrow_up: [ir pro sumario](#sumario)
 
 - [Serverless Framework](https://www.serverless.com/framework/docs/getting-started/)
@@ -21,6 +22,7 @@ sudo npm i -g serverless@2.29.0
 ```
 
 ## Como usar
+
 :arrow_up: [ir pro sumario](#sumario)
 
 1. **Criar conta na AWS**
@@ -65,6 +67,7 @@ sudo npm i -g serverless@2.29.0
 6. **Por fim, execute `npm run start` no bgc-frontend**
 
 ## Videos
+
 :arrow_up: [ir pro sumario](#sumario)
 
 <p align="center">
@@ -82,6 +85,7 @@ sudo npm i -g serverless@2.29.0
 </p>
 
 ## Comandos uteis
+
 :arrow_up: [ir pro sumario](#sumario)
 
 **Nota:** `sls` é um alias para `serverless`
