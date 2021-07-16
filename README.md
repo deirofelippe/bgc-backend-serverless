@@ -1,6 +1,6 @@
 # Desafio GBC Loja (Backend serverless)
 
-[Teste o site clicando aqui ;)](http://bgc-frontend.s3-website-sa-east-1.amazonaws.com/)
+[Teste o site clicando aqui ;)](https://ecstatic-shannon-40084c.netlify.app/)
 
 ## Sumário
 
