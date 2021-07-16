@@ -14,8 +14,8 @@ module.exports.adicionar = async (pedido) => {
    };
 
    try {
-      // await dao.adicionar(params)
-      // await enviar_email(pedido, reservas, usuario)
+      await dao.adicionar(params)
+      await enviar_email(pedido, reservas, usuario)
       const url_checkout = await finalizar_compra(pedido)
       return url_checkout
    } catch (error) {
