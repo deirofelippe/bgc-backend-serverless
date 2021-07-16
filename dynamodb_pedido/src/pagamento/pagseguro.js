@@ -1,5 +1,5 @@
 const axios = require('axios');
-const parser = require('xml2json');
+const convert = require('xml-js');
 const variaveis = require('../../variaveis');
 
 module.exports.finalizar_compra = async pedido => {
@@ -11,9 +11,9 @@ module.exports.finalizar_compra = async pedido => {
 const obter_autorizacao = async body => {
    const url_autorizacao = url_pagseguro.sandbox_autorizacao()
    let response = await axios.post(url_autorizacao, body)
-   response = parser.toJson(response.data)
+   response = convert.xml2json(response.data, {compact: true, spaces: 4})
    response = JSON.parse(response)
-   return response.checkout.code
+   return response.checkout.code._text
 }
 
 const montar_body = pedido => {
