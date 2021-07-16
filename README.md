@@ -25,18 +25,7 @@ sudo npm i -g serverless@2.29.0
 
 :arrow_up: [ir pro sumario](#sumario)
 
-1. **Criar conta na AWS**
-
-   Crie conta na aws e copie a KEY_API e SECRET_KEY [(veja esse vídeo, como exemplo, para obter as credenciais)](https://www.youtube.com/watch?v=KngM5bfpttA)
-
-2. **Configuração do Serverless Framework**
-
-   ```bash
-   sls config credentials -o --provider aws --key=SUA_KEY_API --secret SUA_SECRET_KEY
-   ```
-
-3. **Clonando o projeto e configurando**
-
+1. Clonando o projeto e configurando*
    ```bash
    git clone https://github.com/felippedesouza/bgc-backend-serverless.git
    cd bgc-backend-serverless/dynamodb_pedido
@@ -44,17 +33,39 @@ sudo npm i -g serverless@2.29.0
    mv variaveis.exemplo.js variaveis.js
    ```
 
-4. **Coloque seus dados de email em 'dynamodb_pedido/variaveis.js' (MAIL_SENDER, MAIL_USER e MAIL_PASSWORD)**
+### AWS
+
+1. Criar conta na AWS e copie a KEY_API e SECRET_KEY [(veja esse vídeo, como exemplo, para obter as credenciais)](https://www.youtube.com/watch?v=KngM5bfpttA)
+
+1. Configuração do Serverless Framework
+
+   ```bash
+   sls config credentials -o --provider aws --key=SUA_KEY_API --secret SUA_SECRET_KEY
+   ```
+
+### Email
+
+1. Coloque seus dados de email em `dynamodb_pedido/variaveis.js` (MAIL_SENDER, MAIL_USER e MAIL_PASSWORD)
 
    **Nota:** caso use o Gmail, ative o modo [Less Secure Apps](https://devanswers.co/allow-less-secure-apps-access-gmail-account/)
 
-5. **Fazer deploy da configuração do seu service e do seu código**
+### PagSeguro
+
+1. crie uma conta no pagseguro e gere o [token em sandbox](https://dev.pagseguro.uol.com.br/reference/como-obter-token-de-autenticacao).
+
+1. Coloque o token na variavel `PAGSEGURO_TOKEN_SANDBOX` no arquivo `dynamodb_pedido/variaveis.js`.
+
+![](./screenshots/sls-3.png)
+
+### Finalizando
+
+1. Fazer deploy da configuração do seu service e do seu código
 
    ```bash
    sls deploy -v
    ```
 
-5. **Conectando o frontend ao backend**
+1. Conectando o frontend ao backend
 
    Ao terminar o deploy, copie o endpoint do método HTTP .
 
@@ -64,7 +75,7 @@ sudo npm i -g serverless@2.29.0
 
    ![](./screenshots/sls-2.png)
 
-6. **Por fim, execute `npm run start` no bgc-frontend**
+1. Por fim, execute `npm run start` no bgc-frontend
 
 ## Videos
 
