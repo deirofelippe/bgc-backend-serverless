@@ -1,5 +1,7 @@
 module.exports = {
    MAIL_SENDER: 'Nome <nome@email.com>',
-   MAIL_USER: 'nome@email.com',
-   MAIL_PASSWORD: 'senha'
+   MAIL_PASSWORD: 'SENHA',
+   PAGSEGURO_EMAIL: 'EMAIL',
+   PAGSEGURO_TOKEN_SANDBOX: 'TOKEN',
+   PAGSEGURO_TOKEN_PROD: 'TOKEN'
 }
