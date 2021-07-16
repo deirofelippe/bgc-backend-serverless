@@ -1,38 +1,26 @@
-const dao = require('../dao/pedido_dao');
-const { enviar_dados_pagseguro } = require('../pagamento/pagseguro');
-const { enviar_email } = require('../email/email');
+const service = require('../service/adiciona');
 
 module.exports.adicionar = async (event) => {
    const { pedido } = JSON.parse(event.body);
-   const reservas = pedido.reservas
-   const usuario = pedido.usuario
-
-   const params = {
-      TableName: 'Pedido',
-      Item: {
-         ...pedido
-      },
-   };
 
    let response = {
       statusCode: 0,
-      headers: {
-         'Access-Control-Allow-Origin': '*',
-         'Access-Control-Allow-Credentials': true,
-      },
-      body: ''
+      headers: ''
    }
 
    try {
-      await dao.adicionar(params)
-      await enviar_email(pedido, reservas, usuario)
-      // await enviar_dados_pagseguro()
+      const url_payment = await service.adicionar(pedido)
 
-      response.statusCode = 201
+      response.statusCode = 301
+      response.headers = { Location: url_payment }
    } catch (error) {
       console.log(error)
 
       response.statusCode = 500
+      response.headers = {
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Credentials': true,
+      }
       response.body = JSON.stringify({ msg: 'Falha em algo.' })
    }
 

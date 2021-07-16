@@ -1,6 +1,7 @@
 const dao = require('../dao/pedido_dao');
 
 module.exports.listar = async (event) => {
+   console.log("aqui")
    const params = {
       TableName: 'Pedido',
    };
@@ -14,7 +15,7 @@ module.exports.listar = async (event) => {
       const items = await dao.listar(params)
 
       response.statusCode = 200
-      response.body = JSON.stringify({ pedidos: items.Items, count: items.Count })
+      response.body = JSON.stringify({ count: items.Count, pedidos: items.Items })
    } catch (error) {
       console.log(error)
 
@@ -23,5 +24,5 @@ module.exports.listar = async (event) => {
    }
    
    console.log(response)
-   return
+   return response
 }

@@ -1,22 +1,26 @@
-const dao = require('../dao/pedido_dao');
+const dao = require('../dao/produto_dao');
 
 module.exports.deletar = async (event) => {
-   const numero_pedido = event.pathParameters.id
+   const { id } = event.pathParameters
 
    const params = {
-      TableName: 'Pedido',
+      TableName: 'Produto',
       Key: {
-         'numero_pedido': numero_pedido
+         'id': id
       }
    };
 
    let response = {
       statusCode: 0,
+      headers: {
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Credentials': true,
+      },
       body: ''
    }
 
    try {
-      const items = await dao.deletar(params)
+      await dao.deletar(params)
 
       response.statusCode = 204
    } catch (error) {
@@ -26,6 +30,5 @@ module.exports.deletar = async (event) => {
       response.body = JSON.stringify({ msg: 'Falha em algo.' })
    }
    
-   console.log(response)
    return response
 }

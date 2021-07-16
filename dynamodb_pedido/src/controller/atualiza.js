@@ -24,5 +24,5 @@ module.exports.atualizar = async (event) => {
 
    const r = await dao.atualizar(params)
    console.log(r)
-   return
+   return response
 }

@@ -10,7 +10,7 @@
 - [Comandos uteis](#comandos-uteis)
 
 ## Requisitos
-[(ir para o sumário)](#sumário)
+:arrow_up: [ir pro sumario](#sumario)
 
 - [Serverless Framework](https://www.serverless.com/framework/docs/getting-started/)
 - Git
@@ -21,7 +21,7 @@ sudo npm i -g serverless@2.29.0
 ```
 
 ## Como usar
-[(ir para o sumário)](#sumário)
+:arrow_up: [ir pro sumario](#sumario)
 
 1. **Criar conta na AWS**
 
@@ -56,16 +56,16 @@ sudo npm i -g serverless@2.29.0
 
    Ao terminar o deploy, copie o endpoint do método HTTP .
 
-   ![](./img/sls-1.png)
+   ![](./screenshots/sls-1.png)
 
    Cole em `.env` do [bgc-frontend](https://github.com/felippedesouza/bgc-frontend/blob/main/.env.exemplo)
 
-   ![](./img/sls-2.png)
+   ![](./screenshots/sls-2.png)
 
 6. **Por fim, execute `npm run start` no bgc-frontend**
 
 ## Videos
-[(ir para o sumário)](#sumário)
+:arrow_up: [ir pro sumario](#sumario)
 
 <p align="center">
    <a href="https://youtu.be/_owP1BYJytY"> 
@@ -82,12 +82,13 @@ sudo npm i -g serverless@2.29.0
 </p>
 
 ## Comandos uteis
+:arrow_up: [ir pro sumario](#sumario)
 
 **Nota:** `sls` é um alias para `serverless`
 
 [Mais informações sobre os comandos do CLI](https://www.serverless.com/framework/docs/providers/aws/)
 
-- `sls config credentials -o --provider aws --key=KEY_API --secret SECRET_KEY`
+- `sls config credentials -o --provider aws --key=SUA_KEY_API --secret SUA_SECRET_KEY`
    - usa o serverless para configurar as credenciais da AWS
 - `sls create --template aws-nodejs --path myService`
 - `sls deploy -v` 

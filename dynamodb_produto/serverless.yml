@@ -4,10 +4,18 @@ frameworkVersion: '2'
 
 variablesResolutionMode: 20210219
 
+# plugins:
+#   - serverless-dotenv-plugin # usa o 'environment' como arquivo '.env', permite o uso do 'process.env.'
+#   - serverless-bundle # Package our functions with Webpack
+#   - serverless-offline # lambda, api gateway offline
+#   - serverless-dynamodb-local
+#   - serverless-s3-local
+
 package:
+  # individually: true
   exclude:
     - node_modules/aws-sdk/**
-    - mocks/
+    - mocks/**
     - package-lock.json
 
 provider:
@@ -15,14 +23,22 @@ provider:
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
   stage: dev
+  environment:
+    tabelaProduto: Produto
+    nomeBucket: produto-upload
   apiGateway:
     shouldStartNameWithService: true
   region: sa-east-1
-  environment:
-    TABELA_PRODUTO: Produto
   iam:
     role:
       statements:
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+          - s3:PutObjectAcl
+          - s3:GetObject
+          - s3:DeleteObject
+        Resource: "arn:aws:s3:::${self:provider.environment.nomeBucket}/*"
       - Effect: Allow
         Action:
           - dynamodb:Scan
@@ -36,42 +52,52 @@ provider:
 
 functions:
   adicionar_produto:
-    handler: handler.adicionar
+    handler: src/handler.adicionar
     events:
       - http:
           path: produto
           method: post
+          cors: true
   atualizar_produto:
-    handler: handler.atualizar
+    handler: src/handler.atualizar
     events:
       - http:
           path: produto/{id}
           method: put
+          cors: true
   deletar_produto:
-    handler: handler.deletar
+    handler: src/handler.deletar
     events:
       - http:
           path: produto/{id}
           method: delete
+          cors: true
   buscar_produto:
-    handler: handler.buscar
+    handler: src/handler.buscar
     events:
       - http:
           path: produto/{id}
           method: get
+          cors: true
   listar_produto:
-    handler: handler.listar
+    handler: src/handler.listar
     events:
       - http:
           path: produto
           method: get
+          cors: true
 
 resources:
   Resources:
+    S3Bucket:
+      Type: 'AWS::S3::Bucket'
+      # DeletionPolicy: Retain
+      Properties:
+        BucketName: ${self:provider.environment.nomeBucket}
     Produto:
       Type: 'AWS::DynamoDB::Table'
       Properties:
-        TableName: ${self:provider.environment.TABELA_PRODUTO}
+        TableName: ${self:provider.environment.tabelaProduto}
         AttributeDefinitions:
           -
             AttributeName: id
