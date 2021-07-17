@@ -2,6 +2,8 @@
 
 [Teste o site clicando aqui ;)](https://ecstatic-shannon-40084c.netlify.app/)
 
+[Repositório frontend](https://github.com/felippedesouza/bgc-frontend)
+
 ## Sumário
 
 - [Requisitos](#requisitos)
