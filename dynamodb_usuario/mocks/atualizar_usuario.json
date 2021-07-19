@@ -1,0 +1,6 @@
+{
+   "body": "{\"id\":\"00\",\"nome\":\"fehh\",\"email\":\"fehh@gmail.com\",\"senha\":\"123\",\"tipo_de_usuario\":\"ADMIN\",\"id_endereco\":\"00\"}",
+   "pathParameters": {
+      "id": "00"
+   }
+}

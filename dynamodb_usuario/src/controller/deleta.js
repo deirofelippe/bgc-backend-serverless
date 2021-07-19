@@ -1,4 +1,4 @@
-const dao = require('../dao/produto_dao');
+const dao = require('../dao/usuarioDAO');
 
 module.exports.deletar = async (event) => {
    const { id } = event.pathParameters

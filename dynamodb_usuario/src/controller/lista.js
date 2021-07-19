@@ -1,4 +1,4 @@
-const dao = require('../dao/produto_dao');
+const dao = require('../dao/usuarioDAO');
 
 module.exports.listar = async (event) => {
    const params = {
