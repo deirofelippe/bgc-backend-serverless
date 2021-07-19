@@ -23,7 +23,7 @@ module.exports.buscar = async (event) => {
       const result = await dao.buscar(params)
 
       response.statusCode = 200
-      response.body = JSON.stringify({ pedido: result.Item })
+      response.body = JSON.stringify(result.Item)
    } catch (error) {
       console.log(error)
 
