@@ -1,22 +1,8 @@
-const dao = require('../dao/usuarioDAO');
+const service = require('../service/atualiza');
 
 module.exports.atualizar = async (event) => {
-   const { nome, descricao, preco } = JSON.parse(event.body);
-   const { id } = event.pathParameters
-
-   const params = {
-      TableName: 'Produto',
-      Key: {
-         'id': id
-      },
-      UpdateExpression: 'set nome = :nome, descricao = :descricao, preco = :preco',
-      ExpressionAttributeValues:{
-         ':nome': nome,
-         ':descricao': descricao,
-         ':preco': preco,
-      },
-      ReturnValues:'ALL_NEW'
-   };
+   let usuario = JSON.parse(event.body);
+   usuario.id = event.pathParameters.id
 
    let response = {
       statusCode: 0,
@@ -28,7 +14,7 @@ module.exports.atualizar = async (event) => {
    }
 
    try {
-      const result = await dao.atualizar(params)
+      const result = await service.atualizar(usuario)
 
       response.statusCode = 200
       response.body = JSON.stringify(result.Attributes)
