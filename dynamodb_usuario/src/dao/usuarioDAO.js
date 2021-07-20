@@ -9,12 +9,24 @@ module.exports.listar = async (params) => {
    return await dynamodb.scan(params).promise();
 }
 
+module.exports.listarComSenha = async (params) => {
+   return await dynamodb.scan(params).promise();
+}
+
 module.exports.buscarSenha = async (params) => {
    return await dynamodb.scan(params).promise();
 }
 
 module.exports.buscar = async (params) => {
    return await dynamodb.get(params).promise();
+}
+
+module.exports.buscarUsuarioComSenha = async (params) => {
+   return await dynamodb.get(params).promise();
+}
+
+module.exports.buscarPeloEmail = async (params) => {
+   return await dynamodb.scan(params).promise();
 }
 
 module.exports.atualizar = async (params) => {

@@ -18,8 +18,8 @@ module.exports.adicionar = async event => {
    } catch (error) {
       console.error(error)
 
-      response.statusCode = 500
-      response.body = JSON.stringify({ msg: 'Falha em algo.' })
+      response.statusCode = error.statusCode || 500
+      response.body = JSON.stringify({ msg: error.msg || 'Algo deu errado' })
    }
 
    return response

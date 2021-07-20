@@ -3,29 +3,53 @@ const uuid = require('uuid');
 const argon2 = require('argon2');
 
 module.exports.adicionar = async usuario => {
-   let hash
+   let { email, senha } = usuario
 
-   try {
-      hash = await argon2.hash(usuario.senha, { hashLength: 10 })
-   } catch (error) {
-      throw new Error(error)
+   if(await verificarSeEmailExiste(email)){
+      throw {statusCode: 409, msg: "O email ja existe"}
    }
 
+   senha = await criptografarSenha(senha)
+   
+   await adicionar({ ...usuario, senha })
+}
+
+const criptografarSenha = async senha => {
+   return await argon2.hash(senha, { hashLength: 10 })
+}
+
+const adicionar = async usuario => {
+   const { senha, nome, email, tipo_de_usuario, endereco } = usuario
+   
    const params = {
       TableName: process.env.nomeTabela,
       Item: {
          id: uuid.v1(),
-         nome: usuario.nome, 
-         email: usuario.email,
-         senha: hash,
-         tipo_de_usuario: usuario.tipo_de_usuario,
-         endereco: { ...usuario.endereco }
+         nome: nome, 
+         email: email,
+         senha: senha,
+         tipo_de_usuario: tipo_de_usuario,
+         endereco: { ...endereco }
       },
    };
+   console.log(params);
 
-   try {
-      await dao.adicionar(params)
-   } catch (error) {
-      throw new Error(error)
-   }
+   await dao.adicionar(params)
+}
+
+const verificarSeEmailExiste = async email => {
+   const params = {
+      TableName: process.env.nomeTabela,
+      ProjectionExpression: "email",
+      FilterExpression: "email = :email",
+      ExpressionAttributeValues: {
+         ":email": email,
+     }
+   };
+
+   const result = await dao.buscarPeloEmail(params)
+
+   if(result.Count === 0) return false
+
+   return true
 }
