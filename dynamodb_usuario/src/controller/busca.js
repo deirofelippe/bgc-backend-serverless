@@ -1,14 +1,7 @@
-const dao = require('../dao/usuarioDAO');
+const service = require('../service/busca');
 
 module.exports.buscar = async (event) => {
    const { id } = event.pathParameters
-
-   const params = {
-      TableName: 'Produto',
-      Key: {
-         'id': id, 
-      }
-   };
 
    let response = {
       statusCode: 0,
@@ -16,11 +9,10 @@ module.exports.buscar = async (event) => {
          'Access-Control-Allow-Origin': '*',
          'Access-Control-Allow-Credentials': true,
       },
-      body: ''
    }
 
    try {
-      const result = await dao.buscar(params)
+      const result = await service.buscar(id)
 
       response.statusCode = 200
       response.body = JSON.stringify(result.Item)
