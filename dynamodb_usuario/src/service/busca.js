@@ -9,9 +9,9 @@ module.exports.buscar = async id => {
       }
    };
 
-   try {
-      return await dao.buscar(params)
-   } catch (error) {
-      throw new Error(error)
-   }
+   const result = await dao.buscar(params)
+
+   if (result.Item === undefined) throw {statusCode: 400, msg: "Usuario não encontrado"}
+
+   return result.Item
 }
