@@ -9,6 +9,10 @@ module.exports.listar = async (params) => {
    return await dynamodb.scan(params).promise();
 }
 
+module.exports.buscarSenha = async (params) => {
+   return await dynamodb.scan(params).promise();
+}
+
 module.exports.buscar = async (params) => {
    return await dynamodb.get(params).promise();
 }

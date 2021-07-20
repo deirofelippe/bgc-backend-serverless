@@ -78,6 +78,13 @@ functions:
           path: usuario
           method: get
           cors: true
+  login_usuario:
+    handler: src/handler.login
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
 
 resources:
   Resources:
