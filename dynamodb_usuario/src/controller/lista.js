@@ -1,25 +1,18 @@
-const dao = require('../dao/usuarioDAO');
+const service = require('../service/lista');
 
-module.exports.listar = async (event) => {
-   const params = {
-      TableName: 'Produto',
-   };
-   // ProjectionExpression: "id, nome, descricao, preco"
-
+module.exports.listar = async () => {
    let response = {
-      statusCode: 0,
       headers: {
          'Access-Control-Allow-Origin': '*',
          'Access-Control-Allow-Credentials': true,
       },
-      body: ''
    }
 
    try {
-      const result = await dao.listar(params)
+      const result = await service.listar()
 
       response.statusCode = 200
-      response.body = JSON.stringify({ count: result.Count, produtos: result.Items })
+      response.body = JSON.stringify({ count: result.Count, usuarios: result.Items })
    } catch (error) {
       console.log(error)
 
