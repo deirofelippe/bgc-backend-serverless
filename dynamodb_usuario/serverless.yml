@@ -1,0 +1,105 @@
+service: dynamodbUsuario
+
+frameworkVersion: '2'
+
+variablesResolutionMode: 20210219
+
+# plugins:
+#   - serverless-dotenv-plugin # usa o 'environment' como arquivo '.env', permite o uso do 'process.env.'
+#   - serverless-bundle # Package our functions with Webpack
+#   - serverless-offline # lambda, api gateway offline
+#   - serverless-dynamodb-local
+#   - serverless-s3-local
+
+package:
+  # individually: true
+  exclude:
+    - node_modules/aws-sdk/**
+    - mocks/**
+    - package-lock.json
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  environment:
+    nomeTabela: Usuario
+  apiGateway:
+    shouldStartNameWithService: true
+  region: sa-east-1
+  iam:
+    role:
+      statements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+          - dynamodb:Query
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+          - dynamodb:DescribeTable
+        Resource: "arn:aws:dynamodb:${self:provider.region}:*:*"
+
+functions:
+  adicionar_usuario:
+    handler: src/handler.adicionar
+    events:
+      - http:
+          path: usuario
+          method: post
+          cors: true
+  atualizar_usuario:
+    handler: src/handler.atualizar
+    events:
+      - http:
+          path: usuario/{id}
+          method: put
+          cors: true
+  deletar_usuario:
+    handler: src/handler.deletar
+    events:
+      - http:
+          path: usuario/{id}
+          method: delete
+          cors: true
+  buscar_usuario:
+    handler: src/handler.buscar
+    events:
+      - http:
+          path: usuario/{id}
+          method: get
+          cors: true
+  listar_usuario:
+    handler: src/handler.listar
+    events:
+      - http:
+          path: usuario
+          method: get
+          cors: true
+  login_usuario:
+    handler: src/handler.login
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    Usuario:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: ${self:provider.environment.nomeTabela}
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
