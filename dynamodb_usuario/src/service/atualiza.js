@@ -6,17 +6,13 @@ module.exports.atualizar = async usuario => {
    const { senha, email, id } = usuario
 
    if (await verificarSeEmailExiste(email, id)) {
-      throw new Error('Email ja existe')
+      throw { statusCode: 409, msg: "O email ja existe" }
    }
 
    const senhaCriptografada = await criptografarSenha(senha)
    usuario.senha = senhaCriptografada
 
-   try {
-      return await atualizar(usuario)
-   } catch (error) {
-      throw new Error(error)
-   }
+   return await atualizar(usuario)
 }
 
 const verificarSeEmailExiste = async (email, id) => {
