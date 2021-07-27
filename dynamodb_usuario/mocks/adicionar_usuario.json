@@ -1,3 +1,3 @@
 {
-   "body": "{\"id\":\"00\",\"nome\":\"\",\"email\":\"fehmail.com\",\"senha\":\"123\",\"tipo_de_usuario\":\"ADMIN\",\"endereco\":{\"cep\":\"21550430\",\"estado\":\"RJ\",\"cidade\":\"Rio de Janeiro\",\"bairro\":\"Bento Ribeiro\",\"rua\":\"Dom Vital\",\"numero\":\"01\",\"complemento\":\"Fundos\"}}"
+   "body": "{\"id\":\"00\",\"nome\":\"feh\",\"email\":\"feh@gmail.com\",\"senha\":\"123\",\"tipo_de_usuario\":\"ADMIN\",\"endereco\":{\"cep\":\"21550430\",\"estado\":\"RJ\",\"cidade\":\"Rio de Janeiro\",\"bairro\":\"Bento Ribeiro\",\"rua\":\"Dom Vital\",\"numero\":\"01\",\"complemento\":\"Fundos\"}}"
 }
