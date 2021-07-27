@@ -5,12 +5,12 @@ const argon2 = require('argon2');
 module.exports.adicionar = async usuario => {
    let { email, senha } = usuario
 
-   if(await verificarSeEmailExiste(email)){
-      throw {statusCode: 409, msg: "O email ja existe"}
+   if (await verificarSeEmailExiste(email)) {
+      throw { statusCode: 409, msg: "O email ja existe" }
    }
 
    senha = await criptografarSenha(senha)
-   
+
    await adicionar({ ...usuario, senha })
 }
 
@@ -20,12 +20,12 @@ const criptografarSenha = async senha => {
 
 const adicionar = async usuario => {
    const { senha, nome, email, tipo_de_usuario, endereco } = usuario
-   
+
    const params = {
       TableName: process.env.nomeTabela,
       Item: {
          id: uuid.v1(),
-         nome: nome, 
+         nome: nome,
          email: email,
          senha: senha,
          tipo_de_usuario: tipo_de_usuario,
@@ -44,12 +44,12 @@ const verificarSeEmailExiste = async email => {
       FilterExpression: "email = :email",
       ExpressionAttributeValues: {
          ":email": email,
-     }
+      }
    };
 
    const result = await dao.buscarPeloEmail(params)
 
-   if(result.Count === 0) return false
+   if (result.Count === 0) return false
 
    return true
 }
