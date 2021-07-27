@@ -6,9 +6,5 @@ module.exports.listar = async () => {
       ProjectionExpression: "id, nome, email, tipo_de_usuario, endereco",
    };
 
-   try {
-      return await dao.listar(params)
-   } catch (error) {
-      throw new Error(error)
-   }
+   return await dao.listar(params)
 }

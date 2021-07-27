@@ -16,8 +16,8 @@ module.exports.listar = async () => {
    } catch (error) {
       console.log(error)
 
-      response.statusCode = 500
-      response.body = JSON.stringify({ msg: 'Falha em algo.' })
+      response.statusCode = error.statusCode || 500
+      response.body = JSON.stringify({ error: error.msg || 'Algo deu errado' })
    }
    
    console.log(response)
