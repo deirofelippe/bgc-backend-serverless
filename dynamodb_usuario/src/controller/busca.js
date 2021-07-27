@@ -8,7 +8,7 @@ module.exports.buscar = async (event) => {
       headers: {
          'Access-Control-Allow-Origin': '*',
          'Access-Control-Allow-Credentials': true,
-      },
+      }
    }
 
    try {
@@ -20,7 +20,7 @@ module.exports.buscar = async (event) => {
       console.log(error)
 
       response.statusCode = error.statusCode || 500
-      response.body = JSON.stringify({ msg: error.msg || 'Algo deu errado' })
+      response.body = JSON.stringify({ error: error.msg || 'Algo deu errado' })
    }
 
    return response

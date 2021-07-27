@@ -11,7 +11,11 @@ module.exports.buscar = async id => {
 
    const result = await dao.buscar(params)
 
-   if (result.Item === undefined) throw {statusCode: 400, msg: "Usuario não encontrado"}
+   const naoEncontrou = result.Item === undefined
+   
+   if (naoEncontrou) {
+      throw { statusCode: 400, msg: "Usuario não encontrado" }
+   }
 
    return result.Item
 }
