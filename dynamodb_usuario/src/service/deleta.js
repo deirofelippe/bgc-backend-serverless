@@ -8,9 +8,5 @@ module.exports.deletar = async id => {
       }
    };
 
-   try {
-      return await dao.deletar(params)
-   } catch (error) {
-      throw new Error(error)
-   }
+   await dao.deletar(params)
 }

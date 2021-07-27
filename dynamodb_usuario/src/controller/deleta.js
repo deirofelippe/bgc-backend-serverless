@@ -18,8 +18,8 @@ module.exports.deletar = async (event) => {
    } catch (error) {
       console.log(error)
 
-      response.statusCode = 500
-      response.body = JSON.stringify({ msg: 'Falha em algo.' })
+      response.statusCode = error.statusCode || 500
+      response.body = JSON.stringify({ error: error.msg || 'Algo deu errado' })
    }
    
    return response
