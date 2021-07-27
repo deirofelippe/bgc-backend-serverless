@@ -24,7 +24,7 @@ provider:
   lambdaHashingVersion: 20201221
   stage: dev
   environment:
-    tabelaProduto: Produto
+    nomeTabela: Produto
     nomeBucket: produto-upload
   apiGateway:
     shouldStartNameWithService: true
@@ -97,7 +97,7 @@ resources:
     Produto:
       Type: 'AWS::DynamoDB::Table'
       Properties:
-        TableName: ${self:provider.environment.tabelaProduto}
+        TableName: ${self:provider.environment.nomeTabela}
         AttributeDefinitions:
           -
             AttributeName: id
