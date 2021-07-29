@@ -1,34 +1,25 @@
-const dao = require('../dao/produto_dao');
+const service = require('../service/busca');
 
 module.exports.buscar = async (event) => {
    const { id } = event.pathParameters
 
-   const params = {
-      TableName: 'Produto',
-      Key: {
-         'id': id, 
-      }
-   };
-
    let response = {
-      statusCode: 0,
       headers: {
          'Access-Control-Allow-Origin': '*',
          'Access-Control-Allow-Credentials': true,
-      },
-      body: ''
+      }
    }
 
    try {
-      const result = await dao.buscar(params)
+      const produto = await service.buscar(id)
 
       response.statusCode = 200
-      response.body = JSON.stringify(result.Item)
+      response.body = JSON.stringify({ ...produto })
    } catch (error) {
       console.log(error)
 
-      response.statusCode = 500
-      response.body = JSON.stringify({ msg: 'Falha em algo.' })
+      response.statusCode = error.statusCode || 500
+      response.body = JSON.stringify({ error: error.msg || 'Algo deu errado' })
    }
 
    return response
