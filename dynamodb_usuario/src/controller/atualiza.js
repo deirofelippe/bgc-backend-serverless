@@ -14,10 +14,10 @@ module.exports.atualizar = async (event) => {
    }
 
    try {
-      const result = await service.atualizar(usuario)
+      const { Attributes } = await service.atualizar(usuario)
 
       response.statusCode = 200
-      response.body = JSON.stringify(result.Attributes)
+      response.body = JSON.stringify({ ...Attributes })
    } catch (error) {
       console.log(error)
 
