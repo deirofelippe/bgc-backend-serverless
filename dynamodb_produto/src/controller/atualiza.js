@@ -1,42 +1,27 @@
-const dao = require('../dao/produto_dao');
+const service = require('../service/atualiza');
 
 module.exports.atualizar = async (event) => {
-   const { nome, descricao, preco } = JSON.parse(event.body);
+   const produto = JSON.parse(event.body);
    const { id } = event.pathParameters
-
-   const params = {
-      TableName: 'Produto',
-      Key: {
-         'id': id
-      },
-      UpdateExpression: 'set nome = :nome, descricao = :descricao, preco = :preco',
-      ExpressionAttributeValues:{
-         ':nome': nome,
-         ':descricao': descricao,
-         ':preco': preco,
-      },
-      ReturnValues:'ALL_NEW'
-   };
+   produto.id = id
 
    let response = {
-      statusCode: 0,
       headers: {
          'Access-Control-Allow-Origin': '*',
          'Access-Control-Allow-Credentials': true,
-      },
-      body: ''
+      }
    }
 
    try {
-      const result = await dao.atualizar(params)
+      const produtoAtualizado = await service.atualizar(produto)
 
       response.statusCode = 200
-      response.body = JSON.stringify(result.Attributes)
+      response.body = JSON.stringify({ ...produtoAtualizado })
    } catch (error) {
       console.log(error)
 
-      response.statusCode = 500
-      response.body = JSON.stringify({ msg: 'Falha em algo.' })
+      response.statusCode = error.statusCode || 500
+      response.body = JSON.stringify({ error: error.msg || 'Algo deu errado' })
    }
 
    return response

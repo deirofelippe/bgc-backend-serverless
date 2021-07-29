@@ -24,21 +24,21 @@ provider:
   lambdaHashingVersion: 20201221
   stage: dev
   environment:
-    tabelaProduto: Produto
-    nomeBucket: produto-upload
+    nomeTabela: Produto
+    # nomeBucket: produto-upload
   apiGateway:
     shouldStartNameWithService: true
   region: sa-east-1
   iam:
     role:
       statements:
-      - Effect: Allow
-        Action:
-          - s3:PutObject
-          - s3:PutObjectAcl
-          - s3:GetObject
-          - s3:DeleteObject
-        Resource: "arn:aws:s3:::${self:provider.environment.nomeBucket}/*"
+      # - Effect: Allow
+      #   Action:
+      #     - s3:PutObject
+      #     - s3:PutObjectAcl
+      #     - s3:GetObject
+      #     - s3:DeleteObject
+      #   Resource: "arn:aws:s3:::${self:provider.environment.nomeBucket}/*"
       - Effect: Allow
         Action:
           - dynamodb:Scan
@@ -51,35 +51,35 @@ provider:
         Resource: "arn:aws:dynamodb:${self:provider.region}:*:*"
 
 functions:
-  adicionar_produto:
+  adicionarProduto:
     handler: src/handler.adicionar
     events:
       - http:
           path: produto
           method: post
           cors: true
-  atualizar_produto:
+  atualizarProduto:
     handler: src/handler.atualizar
     events:
       - http:
           path: produto/{id}
           method: put
           cors: true
-  deletar_produto:
+  deletarProduto:
     handler: src/handler.deletar
     events:
       - http:
           path: produto/{id}
           method: delete
           cors: true
-  buscar_produto:
+  buscarProduto:
     handler: src/handler.buscar
     events:
       - http:
           path: produto/{id}
           method: get
           cors: true
-  listar_produto:
+  listarProduto:
     handler: src/handler.listar
     events:
       - http:
@@ -89,15 +89,15 @@ functions:
 
 resources:
   Resources:
-    S3Bucket:
-      Type: 'AWS::S3::Bucket'
-      # DeletionPolicy: Retain
-      Properties:
-        BucketName: ${self:provider.environment.nomeBucket}
+    # S3Bucket:
+    #   Type: 'AWS::S3::Bucket'
+    #   # DeletionPolicy: Retain
+    #   Properties:
+    #     BucketName: ${self:provider.environment.nomeBucket}
     Produto:
       Type: 'AWS::DynamoDB::Table'
       Properties:
-        TableName: ${self:provider.environment.tabelaProduto}
+        TableName: ${self:provider.environment.nomeTabela}
         AttributeDefinitions:
           -
             AttributeName: id

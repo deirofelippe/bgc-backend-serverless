@@ -19,7 +19,7 @@ module.exports.adicionar = async event => {
       console.error(error)
 
       response.statusCode = error.statusCode || 500
-      response.body = JSON.stringify({ msg: error.msg || 'Algo deu errado' })
+      response.body = JSON.stringify({ error: error.msg || 'Algo deu errado' })
    }
 
    return response

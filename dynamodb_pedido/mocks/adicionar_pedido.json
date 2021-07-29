@@ -1,4 +1,4 @@
 {
-   "body": "{\"pedido\":{\"numero_pedido\":\"00\",\"total\":70000,\"data_pedido\":1616093981997,\"usuario\":{\"nome\":\"Feh\",\"email\":\"feh@gmail.com\"},\"reservas\":[{\"nome\":\"Teste 0\",\"descricao\":\"a\",\"preco\":\"5000\",\"quantidade\":2},{\"nome\":\"a\",\"descricao\":\"a\",\"preco\":\"5000\",\"quantidade\":4},{\"nome\":\"Teste 4\",\"descricao\":\"a\",\"preco\":\"5000\",\"quantidade\":7},{\"nome\":\"Teste 3\",\"descricao\":\"a\",\"preco\":\"5000\",\"quantidade\":1}]}}"
+   "body": "{\"pedido\":{\"itens\":[{\"id\": \"00\",\"quantidade\": 2},{\"id\": \"01\",\"quantidade\": 3}],\"idUsuario\": \"00\"}}"
 }
 

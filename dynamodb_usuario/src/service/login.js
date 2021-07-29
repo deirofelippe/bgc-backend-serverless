@@ -9,28 +9,19 @@ module.exports.login = async login => {
 
 const verificarSeSenhaSaoIguais = async (senhaCriptografada, senha) => {
    const senhaSaoIguais = await argon2.verify(senhaCriptografada, senha, { hashLength: 10 })
-   if(!senhaSaoIguais){
+   if (!senhaSaoIguais) {
       throw { statusCode: 409, msg: 'Email e/ou senha estão incorretos' }
    }
 }
 
 const buscarSenha = async email => {
-   const params = {
-      TableName: process.env.nomeTabela,
-      ProjectionExpression: "senha",
-      FilterExpression: "email = :email",
-      ExpressionAttributeValues: {
-         ":email": email,
-     }
-   };
+   const { Count, Items } = await dao.buscarSenha(email)
 
-   const result = await dao.buscarSenha(params)
-
-   const naoExisteUsuario = result.Count === 0
-   if(naoExisteUsuario){
+   const naoExisteUsuario = Count === 0
+   if (naoExisteUsuario) {
       throw { statusCode: 409, msg: 'Email e/ou senha estão incorretos' }
    }
 
-   const { senha: senhaCriptografada } = result.Items[0]
+   const { senha: senhaCriptografada } = Items[0]
    return senhaCriptografada
 }
