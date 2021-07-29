@@ -15,7 +15,7 @@ module.exports.buscar = async (event) => {
       const usuario = await service.buscar(id)
 
       response.statusCode = 200
-      response.body = JSON.stringify(usuario)
+      response.body = JSON.stringify({ ...usuario })
    } catch (error) {
       console.log(error)
 
