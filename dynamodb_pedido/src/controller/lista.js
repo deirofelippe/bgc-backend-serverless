@@ -1,28 +1,26 @@
-const dao = require('../dao/pedido_dao');
+const service = require('../service/lista');
 
 module.exports.listar = async (event) => {
-   console.log("aqui")
-   const params = {
-      TableName: 'Pedido',
-   };
+   const { idUsuario } = event.pathParameters
 
    let response = {
-      statusCode: 0,
-      body: ''
+      headers: {
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Credentials': true,
+      }
    }
 
    try {
-      const items = await dao.listar(params)
+      const { pedidos, count } = await service.listar(idUsuario)
 
       response.statusCode = 200
-      response.body = JSON.stringify({ count: items.Count, pedidos: items.Items })
+      response.body = JSON.stringify({ count, pedidos })
    } catch (error) {
       console.log(error)
 
       response.statusCode = 500
-      response.body = JSON.stringify({ msg: 'Falha em algo.' })
+      response.body = JSON.stringify({ error: error.msg || 'Falha em algo.' })
    }
-   
-   console.log(response)
+
    return response
 }
