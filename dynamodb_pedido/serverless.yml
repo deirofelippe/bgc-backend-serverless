@@ -20,7 +20,7 @@ provider:
     shouldStartNameWithService: true
   region: sa-east-1
   environment:
-    TABELA_PEDIDO: Pedido
+    nomeTabela: Pedido
   iam:
     role:
       statements:
@@ -35,55 +35,55 @@ provider:
         Resource: "arn:aws:dynamodb:${self:provider.region}:*:*"
 
 functions:
-  adicionar_pedido:
+  adicionarPedido:
     handler: src/handler.adicionar
     events:
       - http:
           path: pedido
           method: post
           cors: true
-  listar_pedido:
+  listarPedido:
     handler: src/handler.listar
     events:
       - http:
-          path: pedido
+          path: pedidos/{idUsuario}
           method: get
           cors: true
-  buscar_pedido:
+  buscarPedido:
     handler: src/handler.buscar
     events:
       - http:
-          path: pedido/{id}
+          path: pedido/{numeroPedido}
           method: get
           cors: true
-  atualizar_pedido:
+  atualizarPedido:
     handler: src/handler.atualizar
     events:
       - http:
-          path: pedido/{id}
+          path: pedido/{numeroPedido}
           method: put
           cors: true
-  deletar_pedido:
+  deletarPedido:
     handler: src/handler.deletar
     events:
       - http:
-          path: pedido/{id}
+          path: pedido/{numeroPedido}
           method: delete
           cors: true
 
 resources:
   Resources:
-    Produto:
+    Pedido:
       Type: 'AWS::DynamoDB::Table'
       Properties:
-        TableName: ${self:provider.environment.TABELA_PEDIDO}
+        TableName: ${self:provider.environment.nomeTabela}
         AttributeDefinitions:
           -
-            AttributeName: numero_pedido
+            AttributeName: numeroPedido
             AttributeType: S
         KeySchema:
           -
-            AttributeName: numero_pedido
+            AttributeName: numeroPedido
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
