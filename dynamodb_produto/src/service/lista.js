@@ -1,9 +1,5 @@
-const dao = require('../dao/produto_dao');
+const dao = require('../dao/produtoDAO');
 
 module.exports.listar = async () => {
-   const params = {
-      TableName: process.env.nomeTabela,
-   };
-
-   return await dao.listar(params)
+   return await dao.listar()
 }
