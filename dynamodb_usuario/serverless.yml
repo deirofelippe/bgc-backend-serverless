@@ -43,42 +43,42 @@ provider:
         Resource: "arn:aws:dynamodb:${self:provider.region}:*:*"
 
 functions:
-  adicionar_usuario:
+  adicionarUsuario:
     handler: src/handler.adicionar
     events:
       - http:
           path: usuario
           method: post
           cors: true
-  atualizar_usuario:
+  atualizarUsuario:
     handler: src/handler.atualizar
     events:
       - http:
           path: usuario/{id}
           method: put
           cors: true
-  deletar_usuario:
+  deletarUsuario:
     handler: src/handler.deletar
     events:
       - http:
           path: usuario/{id}
           method: delete
           cors: true
-  buscar_usuario:
+  buscarUsuario:
     handler: src/handler.buscar
     events:
       - http:
           path: usuario/{id}
           method: get
           cors: true
-  listar_usuario:
+  listarUsuario:
     handler: src/handler.listar
     events:
       - http:
           path: usuario
           method: get
           cors: true
-  login_usuario:
+  loginUsuario:
     handler: src/handler.login
     events:
       - http:
