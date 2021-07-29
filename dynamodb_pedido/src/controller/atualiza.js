@@ -1,4 +1,4 @@
-const dao = require('../dao/pedido_dao');
+const dao = require('../dao/pedidoDAO');
 
 module.exports.atualizar = async (event) => {
    const { pedido } = JSON.parse(event.body);
