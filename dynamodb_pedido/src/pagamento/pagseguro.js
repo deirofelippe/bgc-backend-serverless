@@ -2,36 +2,39 @@ const axios = require('axios');
 const convert = require('xml-js');
 const variaveis = require('../../variaveis');
 
-module.exports.finalizar_compra = async pedido => {
-   const body = montar_body(pedido)
-   const code = await obter_autorizacao(body)
-   return url_pagseguro.sandbox_payment(code)
+module.exports.finalizarCompra = async pedido => {
+   const body = montarBody(pedido)
+   const code = await obterAutorizacao(body)
+   return urlPagseguro.sandboxPayment(code)
 }
 
-const obter_autorizacao = async body => {
-   const url_autorizacao = url_pagseguro.sandbox_autorizacao()
-   let response = await axios.post(url_autorizacao, body)
-   response = convert.xml2json(response.data, {compact: true, spaces: 4})
+const obterAutorizacao = async body => {
+   const urlAutorizacao = urlPagseguro.sandboxAutorizacao()
+   let response = await axios.post(urlAutorizacao, body)
+   response = convert.xml2json(response.data, { compact: true, spaces: 4 })
    response = JSON.parse(response)
+
    return response.checkout.code._text
 }
 
-const montar_body = pedido => {
-   const { reservas, usuario } = pedido
+const montarBody = pedido => {
+   const { itens, usuario: { endereco } } = pedido
+
+   endereco.cep = endereco.cep.replace(/[^0-9]/, '')
 
    const formData = new URLSearchParams()
 
    formData.append('currency', 'BRL')
-   formData.append('reference', pedido.numero_pedido)
-   
-   reservas.forEach((reserva, indice) => {
+   formData.append('reference', pedido.numeroPedido)
+
+   itens.forEach((item, indice) => {
       indice++
-      formData.append(`itemId${indice}`, indice)
-      formData.append(`itemDescription${indice}`, reserva.nome)
-      formData.append(`itemAmount${indice}`, parseFloat(reserva.preco).toFixed(2))
-      formData.append(`itemQuantity${indice}`, reserva.quantidade)
+      formData.append(`itemId${indice}`, item.id)
+      formData.append(`itemDescription${indice}`, item.nome)
+      formData.append(`itemAmount${indice}`, parseFloat(item.preco).toFixed(2))
+      formData.append(`itemQuantity${indice}`, item.quantidade)
    })
-   
+
    // formData.append('shippingAddressRequired', 'False')
    // formData.append('shippingAddressPostalCode', endereco.cep) // num 8 digitos
    // formData.append('shippingAddressState', endereco.estado)
@@ -40,10 +43,10 @@ const montar_body = pedido => {
    // formData.append('shippingAddressStreet', endereco.rua)
    // formData.append('shippingAddressNumber', endereco.numero)
    // formData.append('shippingAddressComplement', endereco.complemento)
-   
+
    // body += `shippingType=2` //1 - pac, 2 - sedex, 3 - outro
    // body += `shippingCost=${frete}`
-   
+
    // body += `senderCPF=${cpf}`
    // body += `senderAreaCode=${ddd}`
    // body += `senderPhone=${telefone}`
@@ -54,20 +57,20 @@ const montar_body = pedido => {
    return formData
 }
 
-const url_pagseguro = {
+const urlPagseguro = {
    email: variaveis.PAGSEGURO_EMAIL,
-   token_sandbox: variaveis.PAGSEGURO_TOKEN_SANDBOX,
-   token_prod: variaveis.PAGSEGURO_TOKEN_PROD,
-   sandbox_autorizacao(){
-      return `https://ws.sandbox.pagseguro.uol.com.br/v2/checkout?email=${this.email}&token=${this.token_sandbox}`
+   tokenSandbox: variaveis.PAGSEGURO_TOKEN_SANDBOX,
+   tokenProd: variaveis.PAGSEGURO_TOKEN_PROD,
+   sandboxAutorizacao() {
+      return `https://ws.sandbox.pagseguro.uol.com.br/v2/checkout?email=${this.email}&token=${this.tokenSandbox}`
    },
-   sandbox_payment(code){
+   sandboxPayment(code) {
       return `https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=${code}`
    },
-   prod_autorizacao(){
-      return `https://ws.pagseguro.uol.com.br/v2/checkout?email=${this.email}&token=${this.token_prod}`
+   prodAutorizacao() {
+      return `https://ws.pagseguro.uol.com.br/v2/checkout?email=${this.email}&token=${this.tokenProd}`
    },
-   prod_payment(code){
+   prodPayment(code) {
       return `https://pagseguro.uol.com.br/v2/checkout/payment.html?code=${code}`
    }
 }
