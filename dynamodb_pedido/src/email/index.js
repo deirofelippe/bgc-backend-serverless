@@ -1,14 +1,16 @@
-const { gerar_corpo_email } = require('./corpo_email');
+const { gerarCorpoXML } = require('./corpoEmail');
 const nodemailer = require('nodemailer');
 const variaveis = require('../../variaveis');
 
-module.exports.enviar_email = async (pedido, reservas, usuario) => {
-   const html = gerar_corpo_email(pedido, reservas, usuario)
+module.exports.enviarEmail = async pedido => {
+   const { usuario } = pedido
+
+   const xml = gerarCorpoXML(pedido)
 
    const mailOptions = {
       from: variaveis.MAIL_SENDER,
       subject: "Reserva feita!",
-      html: html,
+      html: xml,
       to: `${usuario.email}, ${variaveis.MAIL_USER}`,
    };
 
