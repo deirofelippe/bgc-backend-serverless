@@ -20,6 +20,5 @@ module.exports.listar = async () => {
       response.body = JSON.stringify({ error: error.msg || 'Algo deu errado' })
    }
    
-   console.log(response)
    return response
 }
